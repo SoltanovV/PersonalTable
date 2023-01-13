@@ -1,9 +1,10 @@
-﻿using PersonalTable.Model.Entity;
+﻿using PersonalTable.Model.Dto;
+using PersonalTable.Model.Entity;
 
 namespace PersonalTable.Services.Interface
 {
     public interface IPersonCreate
     {
-        public Task<Person> CreatePersonAsync(Person person);
+        public Task<PersonDto> CreatePersonAsync(PersonDto personDto);
     }
 }
