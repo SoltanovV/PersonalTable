@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PersonalTable.Model;
+using PersonalTable.Model.Dto;
 using PersonalTable.Model.Entity;
 
 namespace PersonalTable.Utiliteis;
@@ -10,8 +10,8 @@ public class MappingConfig
     {
         var mapperConfig = new MapperConfiguration(config =>
         {
-            config.CreateMap<RequestPerson, Person>();
-            config.CreateMap<Person, RequestPerson>();
+            config.CreateMap<PersonDto, Person>();
+            config.CreateMap<Person, PersonDto>();
 
         });
         return mapperConfig;
