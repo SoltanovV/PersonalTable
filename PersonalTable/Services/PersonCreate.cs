@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using PersonalTable.Model;
 using PersonalTable.Model.Dto;
 using PersonalTable.Model.Entity;
@@ -23,6 +22,7 @@ namespace PersonalTable.Services
                 var person = _mapper.Map<PersonDto, Person>(personDto);
                 await _db.AddAsync(person);
                 await _db.SaveChangesAsync();
+
                 return _mapper.Map<Person, PersonDto>(person);
             }
             catch

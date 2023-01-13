@@ -1,10 +1,12 @@
 ﻿using PersonalTable.Model.Dto;
-using PersonalTable.Model.Entity;
 
-namespace PersonalTable.Services.Interface
+namespace PersonalTable.Services.Interface;
+public interface IPersonCreate
 {
-    public interface IPersonCreate
-    {
-        public Task<PersonDto> CreatePersonAsync(PersonDto personDto);
-    }
+    /// <summary>
+    /// Сервис для создание записи в БД
+    /// </summary>
+    /// <param name="personDto">Данные с клиента</param>
+    /// <returns>Сзданный элемент</returns>
+    public Task<PersonDto> CreatePersonAsync(PersonDto personDto);
 }

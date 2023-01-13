@@ -29,6 +29,11 @@ namespace PersonalTable.Controllers
             _searchPerson = searchPerson;
         }
 
+        /// <summary>
+        /// Создание записей в БД
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>Созданный элемент</returns>
         [HttpPost]
         [Route("create")]
         public async Task<ActionResult<PersonDto>> CreatePersonAsync([FromBody] PersonDto request)
@@ -48,9 +53,15 @@ namespace PersonalTable.Controllers
            
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchDto">DTO для входных данных</param>
+        /// <param name="pageNumber">Номер старницы</param>
+        /// <returns>Списко элементов</returns>
         [HttpPost]
         [Route("search/{pageNumber}")]
-        public async Task<ActionResult<Person>> SeachPerson([FromBody] PersonSearchDto searchDto, int pageNumber)
+        public async Task<ActionResult<Person>> SeachrPerson([FromBody] PersonSearchDto searchDto, int pageNumber)
         {
             try
             {
@@ -66,6 +77,10 @@ namespace PersonalTable.Controllers
             }
         }
 
+        /// <summary>
+        /// Метод для возвращения списка гендеров
+        /// </summary>
+        /// <returns>Список гендеров</returns>
         [HttpGet]
         [Route("genders")]
         public ActionResult<IEnumerable<Gender>> GetGender()

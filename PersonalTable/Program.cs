@@ -7,9 +7,8 @@ using PersonalTable.Utiliteis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-// CORS policy settings
+// Натсройка CORS
 builder.Services.AddCors(options =>
     options.AddPolicy("CORSPolicy",
         builder =>
@@ -22,18 +21,25 @@ builder.Services.AddCors(options =>
         }));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Создание зависимости
 builder.Services.AddTransient<IPersonCreate, PersonCreate>();
 builder.Services.AddTransient<ISearchPerson, SearchPerson>();
 
+// Настройка конфигурации 
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+// Создание зависимости
 builder.Services.AddSingleton(mapper);
+// Добавления маппинга
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// Получение строки подключения
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Передача строки подключения
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
     options.UseSqlServer(connection);

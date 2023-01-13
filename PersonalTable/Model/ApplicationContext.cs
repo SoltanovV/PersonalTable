@@ -21,12 +21,12 @@ namespace PersonalTable.Model
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<Person>().
-                Property(p => p.Birthday)
-                .HasColumnType("date");
-        }
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<Person>().
+        //        Property(p => p.Birthday)
+        //        .HasColumnType("date");
+        //}
 
     }
 }
