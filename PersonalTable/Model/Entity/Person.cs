@@ -1,4 +1,8 @@
-﻿namespace PersonalTable.Model.Entity;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PersonalTable.Model.Entity;
 
 public class Person
 {
@@ -10,7 +14,7 @@ public class Person
     /// <summary>
     /// Имя пользователя
     /// </summary>
-    public string FirName { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
 
     /// <summary>
     /// Фамилия пользователя
@@ -21,11 +25,11 @@ public class Person
     /// Отчество пользователя
     /// </summary>
     public string Patronymic { get; set; } = string.Empty;
-    
+
     /// <summary>
     /// День рождения пользователя 
     /// </summary>
-    public DateTime Birthday { get; set; } = DateTime.MinValue;
+    public DateTime Birthday { get; set; } = DateTime.Now;
 
     /// <summary>
     /// Страна пользователя
@@ -50,16 +54,17 @@ public class Person
 public enum Gender
 {
     /// <summary>
+    /// Не определен
+    /// </summary>
+    Indefined = 0, 
+
+    /// <summary>
     /// Мужской
     /// </summary>
-    Man,
+    Man = 1,
+
     /// <summary>
     /// Женский
     /// </summary>
-    Woman,
-
-    /// <summary>
-    /// Не определен
-    /// </summary>
-    Indefined
+    Woman = 2
 }

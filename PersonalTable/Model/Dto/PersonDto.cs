@@ -1,8 +1,8 @@
 ﻿using PersonalTable.Model.Entity;
 
-namespace PersonalTable.Model
+namespace PersonalTable.Model.Dto
 {
-    public class RequestPerson
+    public class PersonDto
     {
         /// <summary>
         /// id пользователя
@@ -12,7 +12,7 @@ namespace PersonalTable.Model
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string FirName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         /// <summary>
         /// Фамилия пользователя
@@ -27,7 +27,7 @@ namespace PersonalTable.Model
         /// <summary>
         /// День рождения пользователя 
         /// </summary>
-        public DateTime Birthday { get; set; } = DateTime.MinValue;
+        public DateTime Birthday { get; set; }
 
         /// <summary>
         /// Страна пользователя
@@ -42,6 +42,6 @@ namespace PersonalTable.Model
         /// <summary>
         /// Гендер пользователя
         /// </summary>
-        public Gender Gender { get; set; } = Gender.Indefined;
+        public Gender Gender { get; set; }
     }
 }
