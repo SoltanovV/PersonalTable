@@ -1,115 +1,75 @@
 import React from "react";
-import { GET_GENDERS_API } from "../api";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 class Filter extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoaded: false,
-      error: null,
-      genders: [],
       filter: {
-        firstName: null,
-        lastName: null,
-        patronymic: null,
-        county: null,
-        city: null,
-        gender: 0,
+        fullName: "",
+        birthday: null,
       },
     };
 
-    this.onChangeGender = this.onChangeGender.bind(this);
+    this.onChangeFullName = this.onChangeFullName.bind(this);
+    this.onChangeBirthday = this.onChangeBirthday.bind(this);
+    this.onSearch = this.onSearch.bind(this);
   }
 
-  componentDidMount() {
-    fetch(GET_GENDERS_API(), {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({
-          ...this.state,
-          isLoaded: true,
-          genders: json,
-        });
-      })
-      .catch((error) => this.setState({ ...this.state, error: error }));
-  }
-
-  onChangeGender(event) {
+  onChangeFullName(event) {
     this.setState({
       ...this.state,
       filter: {
         ...this.state.filter,
-        gender: event.target.value,
+        fullName: event.target.value,
       },
     });
   }
 
-  render() {
-    const { isLoaded, genders, filter } = this.state;
-    if (!isLoaded) {
-      return <div>Loading...</div>;
-    }
+  onChangeBirthday(event) {
+    var birthday = null;
 
+    if (event.target.value != "") birthday = event.target.value;
+
+    this.setState({
+      ...this.state,
+      filter: {
+        ...this.state.filter,
+        birthday: birthday,
+      },
+    });
+  }
+
+  onSearch() {
+    this.props.onSearch(this.state.filter);
+  }
+
+  render() {
+    const { filter } = this.state;
+     
     return (
       <div className="inputs">
-        {/* <div className="input">
-          <label className="label">Название</label>
-          <input
+        <div className="input">
+          <label className="label">ФИО</label>
+          <Form.Control
             type="text"
-            value={this.state.name}
-            onChange={this.onChangeName}
+            value={filter.fullName}
+            onChange={this.onChangeFullName}
           />
         </div>
         <div className="input">
-          <label className="label">Название</label>
-          <input
-            type="text"
-            value={this.state.name}
-            onChange={this.onChangeName}
+          <label className="label">Дата</label>
+          <Form.Control
+            type="date"
+            value={filter.birthday}
+            onChange={this.onChangeBirthday}
           />
         </div>
         <div className="input">
-          <label className="label">Название</label>
-          <input
-            type="text"
-            value={this.state.name}
-            onChange={this.onChangeName}
-          />
-        </div>
-        <div className="input">
-          <label className="label">Название</label>
-          <input
-            type="text"
-            value={this.state.name}
-            onChange={this.onChangeName}
-          />
-        </div>
-        <div className="input">
-          <label className="label">Название</label>
-          <input
-            type="text"
-            value={this.state.name}
-            onChange={this.onChangeName}
-          />
-        </div> */}
-        <div className="input">
-          <label className="label">Название</label>
-          <select
-            className="input-select"
-            value={this.state.filter.gender}
-            onChange={this.onChangeGender}
-          >
-            {genders.map((gender, key) => (
-              <option key={key} value={key}>
-                {gender}
-              </option>
-            ))}
-          </select>
-        </div>
+          <Button onClick={this.onSearch}>Поиск</Button>
+        </div>        
       </div>
     );
   }
