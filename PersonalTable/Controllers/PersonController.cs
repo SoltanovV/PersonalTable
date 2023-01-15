@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PersonalTable.Model;
-using PersonalTable.Model.Dto;
 using PersonalTable.Model.Entity;
+using PersonalTable.Model.Requests;
+using PersonalTable.Model.Responses;
 using PersonalTable.Services.Interface;
 using System.Collections;
 
@@ -11,20 +12,23 @@ namespace PersonalTable.Controllers
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
-        private readonly ILogger<PersonController> _logger;
         private readonly ApplicationContext _db;
-        private readonly IPersonCreate _personCreate;
-        private readonly ISearchPerson _searchPerson;
+        private readonly IPersonServices _personCreate;
+        private IMapper _mapper;
+        private readonly ILogger<PersonController> _logger;
+        private readonly ISearchPersonServices _searchPerson;
 
 
         public PersonController(ApplicationContext db, 
-            IPersonCreate personCreate, 
+            IPersonServices personCreate, 
             IMapper mapper, 
             ILogger<PersonController> logger, 
-            ISearchPerson searchPerson)
+            ISearchPersonServices searchPerson
+            )
         {
             _db = db;
             _personCreate = personCreate;
+            _mapper = mapper;
             _logger = logger;
             _searchPerson = searchPerson;
         }
@@ -36,13 +40,17 @@ namespace PersonalTable.Controllers
         /// <returns>Созданный элемент</returns>
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<PersonDto>> CreatePersonAsync([FromBody] PersonDto request)
+        public async Task<ActionResult<CreatePersonResponce>> CreatePersonAsync([FromBody] CreatePersonRequest request)
         {
             try
             {
                 _logger.LogInformation("Вызов метода CreatePersonAsync");
-                var result = await _personCreate.CreatePersonAsync(request);
-                return Ok(result);
+
+                var person = _mapper.Map<CreatePersonRequest, Person>(request);
+                var result = await _personCreate.CreatePersonAsync(person);
+                var responce = _mapper.Map<Person, CreatePersonResponce>(result);
+
+                return Ok(responce);
             }
             catch(Exception ex)
             {
@@ -54,18 +62,19 @@ namespace PersonalTable.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Поиск
         /// </summary>
         /// <param name="searchDto">DTO для входных данных</param>
         /// <param name="pageNumber">Номер старницы</param>
         /// <returns>Списко элементов</returns>
         [HttpPost]
         [Route("search/{pageNumber}")]
-        public async Task<ActionResult<Person>> SeachrPerson([FromBody] PersonSearchDto searchDto, int pageNumber)
+        public async Task<ActionResult<SearchPersonResponce>> SeachrPerson([FromBody] SearchPersonRequest request, int pageNumber)
         {
             try
             {
-                var result = await _searchPerson.SearchPersonAsync(pageNumber, searchDto);
+                var person = _mapper.Map<SearchPersonRequest, Person>(request);
+                var result = await _searchPerson.SearchPersonAsync(person, pageNumber);
 
                 return Ok(result);
             }
