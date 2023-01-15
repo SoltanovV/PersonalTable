@@ -12,24 +12,14 @@ public class Person
     public int Id { get; set; }
 
     /// <summary>
-    /// Имя пользователя
+    /// ФИО пользователя
     /// </summary>
-    public string FirstName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Фамилия пользователя
-    /// </summary>
-    public string LastName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Отчество пользователя
-    /// </summary>
-    public string Patronymic { get; set; } = string.Empty;
+    public string FullName { get; set; } = string.Empty;
 
     /// <summary>
     /// День рождения пользователя 
     /// </summary>
-    public DateTime Birthday { get; set; } = DateTime.Now;
+    public DateTime? Birthday { get; set; } 
 
     /// <summary>
     /// Страна пользователя
@@ -56,15 +46,15 @@ public enum Gender
     /// <summary>
     /// Не определен
     /// </summary>
-    Indefined = 0, 
+    Indefined, 
 
     /// <summary>
     /// Мужской
     /// </summary>
-    Man = 1,
+    Man,
 
     /// <summary>
     /// Женский
     /// </summary>
-    Woman = 2
+    Woman
 }

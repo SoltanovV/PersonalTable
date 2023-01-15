@@ -1,8 +1,6 @@
-﻿using PersonalTable.Model.Entity;
-
-namespace PersonalTable.Model.Dto
+﻿namespace PersonalTable.Model.Responses
 {
-    public class PersonDto
+    public class CreatePersonResponce
     {
         /// <summary>
         /// id пользователя
@@ -10,19 +8,9 @@ namespace PersonalTable.Model.Dto
         public int Id { get; set; }
 
         /// <summary>
-        /// Имя пользователя
+        /// ФИО пользователя
         /// </summary>
-        public string FirstName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Фамилия пользователя
-        /// </summary>
-        public string LastName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Отчество пользователя
-        /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
 
         /// <summary>
         /// День рождения пользователя 
@@ -42,6 +30,6 @@ namespace PersonalTable.Model.Dto
         /// <summary>
         /// Гендер пользователя
         /// </summary>
-        public Gender Gender { get; set; }
+        public int Gender { get; set; }
     }
 }
