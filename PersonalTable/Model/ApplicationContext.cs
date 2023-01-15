@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PersonalTable.Model.Entity;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace PersonalTable.Model
+﻿namespace PersonalTable.Model
 {
     /// <summary>
     /// Контекст базы данных
@@ -20,13 +16,5 @@ namespace PersonalTable.Model
             //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<Person>().
-                Property(p => p.Birthday)
-                .HasColumnType("date");
-        }
-
     }
 }

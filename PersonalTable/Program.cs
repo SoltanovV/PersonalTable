@@ -1,15 +1,12 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using PersonalTable.Model;
 using PersonalTable.Services;
-using PersonalTable.Services.Interface;
 using PersonalTable.Utiliteis;
+using PersonalTable.Model.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-// CORS policy settings
+// Settings CORS
 builder.Services.AddCors(options =>
     options.AddPolicy("CORSPolicy",
         builder =>
@@ -21,23 +18,33 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:5500");
         }));
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddTransient<IPersonCreate, PersonCreate>();
-builder.Services.AddTransient<ISearchPerson, SearchPerson>();
-
-IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-builder.Services.AddSingleton(mapper);
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Connecting to databases
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
     options.UseSqlServer(connection);
 });
+
+// Page settings
+var pageSettings = builder.Configuration.GetSection("PageSettings");
+builder.Services.Configure<PageSettings>(pageSettings);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Service registration
+builder.Services.AddTransient<IPersonServices, PersonServices>();
+builder.Services.AddTransient<ISearchPersonServices, SearchPersonServices>();
+
+// Ьapper setting
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+
+// Mapper service registration
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
