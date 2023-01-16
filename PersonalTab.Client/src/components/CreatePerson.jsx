@@ -19,6 +19,26 @@ class CreatePerson extends React.Component {
       },
     };
 
+    // const [fullName,setFullName] = useState()
+    // const [birthday,setBirthday] = useState()
+    // const [city,setCity] = useState()
+    // const [country,setCountry] = useState()
+    // const [gender,setGender] = useState()
+
+    // const [fullNameDirt,setFullNameDirt] = useState(false)
+    // const [birthdayDirt,setBirthdayDirt] = useState(false)
+    // const [cityDirt,setCityDirt] = useState(false)
+    // const [countryDirt,setCountryDirt] = useState(false)
+    // const [genderDirt,setGenderDirt] = useState(false)
+
+    // const [fullNameError,setFullNameError] = useState("ФИО не можеи быть пустым")
+    // const [birthdayError,setBirthdayError] = useState("Дата не может быть пустой")
+    // const [cityError,setCityError] = useState("Город не может быть пустым")
+    // const [countryError,setCountryError] = useState("Страна не может быть пустой")
+    // const [genderError,setGenderError] = useState("Выберите пол")
+
+
+
     this.getGenders = this.getGenders.bind(this);
     this.onChangeFullName = this.onChangeFullName.bind(this);
     this.onChangeBirthday = this.onChangeBirthday.bind(this);
@@ -31,6 +51,7 @@ class CreatePerson extends React.Component {
   componentDidMount() {
     this.getGenders();
   }
+
 
   getGenders() {
     fetch(GET_GENDERS_API(), {
@@ -47,6 +68,7 @@ class CreatePerson extends React.Component {
       })
       .catch((error) => this.setState({ ...this.state, error: error }));
   }
+
 
   onChangeFullName(event) {
     this.setState({
@@ -104,6 +126,7 @@ class CreatePerson extends React.Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state.form),
     })
+    
   }
 
   render() {
@@ -141,7 +164,7 @@ class CreatePerson extends React.Component {
         </div>
         <div className="input">
           <label className="label">Пол</label>
-          <Form.Select aria-label="Укажите пол"
+          <Form.Select 
             className="input-select"
             value={form.gender}
             onChange={this.onChangeGender}

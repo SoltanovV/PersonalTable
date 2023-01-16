@@ -1,6 +1,6 @@
 import React from "react";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 class Filter extends React.Component {
   constructor(props) {
@@ -44,32 +44,38 @@ class Filter extends React.Component {
 
   onSearch() {
     this.props.onSearch(this.state.filter);
+    
   }
 
   render() {
     const { filter } = this.state;
-     
+
     return (
       <div className="inputs">
-        <div className="input">
-          <label className="label">ФИО</label>
-          <Form.Control
-            type="text"
-            value={filter.fullName}
-            onChange={this.onChangeFullName}
-          />
+        <div className="conteiner">
+          <div className="input">
+            <label className="label">ФИО</label>
+            <Form.Control
+            
+            className="fullName"
+              type="text"
+              value={filter.fullName}
+              onChange={this.onChangeFullName}
+            />
+          </div>
+          <div className="input">
+            <label className="label">Дата</label>
+            <Form.Control
+              type="date"
+              value={filter.birthday}
+              onChange={this.onChangeBirthday}
+            />
+          </div>
         </div>
+
         <div className="input">
-          <label className="label">Дата</label>
-          <Form.Control
-            type="date"
-            value={filter.birthday}
-            onChange={this.onChangeBirthday}
-          />
+          <Button className="mt-3" onClick={this.onSearch}> Поиск </Button>
         </div>
-        <div className="input">
-          <Button onClick={this.onSearch}>Поиск</Button>
-        </div>        
       </div>
     );
   }
