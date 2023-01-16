@@ -1,5 +1,6 @@
 import React from "react";
 import { GET_GENDERS_API } from "../api";
+import Form from 'react-bootstrap/Form';
 import { Table as BootstrapTable } from "react-bootstrap"
 
 class Table extends React.Component {
@@ -95,7 +96,7 @@ class Table extends React.Component {
 
     return (
       <div>
-        <BootstrapTable striped bordered hover>
+        <BootstrapTable className="mt-5" striped bordered hover>
           <thead>
             <tr>
               <th onClick={(e) => this.onSort("fullName")}>ФИО</th>
@@ -119,13 +120,13 @@ class Table extends React.Component {
           <tfoot>
             <div className="input">
               <label className="label">Page</label>
-              <select
-                className="input-select"
+              <Form.Select 
+                className="bg-select"
                 value={pageNumber}
                 onChange={this.onChangePage}
               >
                 {pages}
-              </select>
+              </Form.Select>
             </div>
           </tfoot>
         </BootstrapTable>
