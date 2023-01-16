@@ -1,7 +1,8 @@
 import React from "react";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import { GET_GENDERS_API, POST_CREATE_API } from "../api";
+import { FormLabel } from "react-bootstrap";
 
 class CreatePerson extends React.Component {
   constructor(props) {
@@ -19,26 +20,6 @@ class CreatePerson extends React.Component {
       },
     };
 
-    // const [fullName,setFullName] = useState()
-    // const [birthday,setBirthday] = useState()
-    // const [city,setCity] = useState()
-    // const [country,setCountry] = useState()
-    // const [gender,setGender] = useState()
-
-    // const [fullNameDirt,setFullNameDirt] = useState(false)
-    // const [birthdayDirt,setBirthdayDirt] = useState(false)
-    // const [cityDirt,setCityDirt] = useState(false)
-    // const [countryDirt,setCountryDirt] = useState(false)
-    // const [genderDirt,setGenderDirt] = useState(false)
-
-    // const [fullNameError,setFullNameError] = useState("ФИО не можеи быть пустым")
-    // const [birthdayError,setBirthdayError] = useState("Дата не может быть пустой")
-    // const [cityError,setCityError] = useState("Город не может быть пустым")
-    // const [countryError,setCountryError] = useState("Страна не может быть пустой")
-    // const [genderError,setGenderError] = useState("Выберите пол")
-
-
-
     this.getGenders = this.getGenders.bind(this);
     this.onChangeFullName = this.onChangeFullName.bind(this);
     this.onChangeBirthday = this.onChangeBirthday.bind(this);
@@ -46,12 +27,15 @@ class CreatePerson extends React.Component {
     this.onChangeCountry = this.onChangeCountry.bind(this);
     this.onChangeGender = this.onChangeGender.bind(this);
     this.onCreate = this.onCreate.bind(this);
+
+    this.onValidate = this.onValidate.bind(this);
   }
 
   componentDidMount() {
     this.getGenders();
   }
 
+  onValidate(events) {}
 
   getGenders() {
     fetch(GET_GENDERS_API(), {
@@ -68,7 +52,6 @@ class CreatePerson extends React.Component {
       })
       .catch((error) => this.setState({ ...this.state, error: error }));
   }
-
 
   onChangeFullName(event) {
     this.setState({
@@ -121,12 +104,12 @@ class CreatePerson extends React.Component {
   }
 
   onCreate() {
-    fetch(POST_CREATE_API(), {
+      fetch(POST_CREATE_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state.form),
-    })
-    
+    });
+    alert("Успешно")
   }
 
   render() {
@@ -137,14 +120,18 @@ class CreatePerson extends React.Component {
         <div className="input">
           <label className="label">ФИО</label>
           <Form.Control
+            required
             type="text"
+            id="fullName"
             value={form.fullName}
             onChange={this.onChangeFullName}
+            onBlur={this.onValidate}
           />
         </div>
         <div className="input">
           <label className="label">Дата</label>
           <Form.Control
+            required
             type="date"
             value={form.birthday}
             onChange={this.onChangeBirthday}
@@ -152,11 +139,17 @@ class CreatePerson extends React.Component {
         </div>
         <div className="input">
           <label className="label">Город</label>
-          <Form.Control type="text" value={form.city} onChange={this.onChangeCity} />
+          <Form.Control
+            required
+            type="text"
+            value={form.city}
+            onChange={this.onChangeCity}
+          />
         </div>
         <div className="input">
           <label className="label">Страна</label>
           <Form.Control
+            required
             type="text"
             value={form.country}
             onChange={this.onChangeCountry}
@@ -164,7 +157,8 @@ class CreatePerson extends React.Component {
         </div>
         <div className="input">
           <label className="label">Пол</label>
-          <Form.Select 
+          <Form.Select
+            required
             className="input-select"
             value={form.gender}
             onChange={this.onChangeGender}
@@ -177,7 +171,9 @@ class CreatePerson extends React.Component {
           </Form.Select>
         </div>
         <div className="input">
-          <Button className="mt-4" onClick={this.onCreate}>Create</Button>
+          <Button className="mt-4" onClick={this.onCreate} name="create">
+            Create
+          </Button>
         </div>
       </div>
     );

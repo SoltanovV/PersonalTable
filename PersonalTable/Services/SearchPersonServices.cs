@@ -27,6 +27,8 @@ namespace PersonalTable.Services
 
                 var skipCount = (pageNumber - 1) * entityCount;
 
+                // Проверка на входящие данные с клиента
+                // Если приходит пустой запрос то он возвращает весь список пользователей
                 if (!String.IsNullOrEmpty(person.FullName) && person.Birthday == null) {
                     result.Persons = await _db.Person.Where(p => p.FullName == person.FullName)
                                                   .Skip(skipCount)
@@ -36,10 +38,13 @@ namespace PersonalTable.Services
                     var pageCount = await _db.Person.Where(p => p.FullName == person.FullName)
                                                     .CountAsync();
 
+                    // Расчет страниц для погинации
                     if (pageCount % _settings.EntityCount == 0)
                         result.PageCount = pageCount / _settings.EntityCount;
                     else result.PageCount = pageCount / _settings.EntityCount + 1;
                 }
+
+                // Если приходит только дата он ищет совпадения в бд и возвращает их
                 else if (String.IsNullOrEmpty(person.FullName) && person.Birthday != null)
                 {
                     result.Persons = await _db.Person.Where(p => p.Birthday == person.Birthday)
@@ -49,11 +54,14 @@ namespace PersonalTable.Services
 
                     var pageCount = await _db.Person.Where(p => p.Birthday == person.Birthday)
                                                     .CountAsync();
-
+                    
+                    // Расчет страниц для погинации
                     if (pageCount % _settings.EntityCount == 0)
                         result.PageCount = pageCount / _settings.EntityCount;
                     else result.PageCount = pageCount / _settings.EntityCount + 1;
                 }
+
+                // Если приходит ФИО и дата он ищет совпадения в бд и возвращает их
                 else if (!String.IsNullOrEmpty(person.FullName) && person.Birthday != null)
                 {
                     result.Persons = await _db.Person.Where(p => p.FullName == person.FullName &&
@@ -66,10 +74,12 @@ namespace PersonalTable.Services
                                                          p.Birthday == person.Birthday)
                                                     .CountAsync();
 
+                    // Расчет страниц для погинации
                     if (pageCount % _settings.EntityCount == 0)
                         result.PageCount = pageCount / _settings.EntityCount;
                     else result.PageCount = pageCount / _settings.EntityCount + 1;
-                }  
+                }
+                // Получение колличества записей
                 else
                 {
                     result.Persons = await _db.Person.Skip(skipCount)

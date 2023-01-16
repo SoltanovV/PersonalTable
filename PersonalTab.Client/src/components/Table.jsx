@@ -96,7 +96,7 @@ class Table extends React.Component {
 
     return (
       <div>
-        <BootstrapTable className="mt-5" striped bordered hover>
+        <BootstrapTable striped bordered hover>
           <thead>
             <tr>
               <th onClick={(e) => this.onSort("fullName")}>ФИО</th>
@@ -119,7 +119,7 @@ class Table extends React.Component {
           </tbody>
           <tfoot>
             <div className="input">
-              <label className="label">Page</label>
+              <label className="label">Страницы</label>
               <Form.Select 
                 className="bg-select"
                 value={pageNumber}
