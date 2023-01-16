@@ -10,7 +10,7 @@
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             :base (options) 
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }
